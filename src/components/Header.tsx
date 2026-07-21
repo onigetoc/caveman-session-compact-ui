@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </div>
           <p className="text-xs text-slate-400 hidden sm:block">
-            Compression haute fidélité sans perte de sens ni de contexte
+            High-fidelity compression preserving context & meaning
           </p>
         </div>
       </div>
@@ -79,7 +79,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="appearance-none bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 text-xs font-medium py-1.5 pl-3 pr-8 rounded-xl cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-500/50 transition-colors"
           >
             <option value="" disabled>
-              ⚡ Charger un exemple...
+              ⚡ Load a sample...
             </option>
             {SAMPLE_CONVERSATIONS.map((preset) => (
               <option key={preset.id} value={preset.id}>
@@ -93,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Level Selector */}
         <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
           <span className="px-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider hidden md:inline">
-            Niveau:
+            Level:
           </span>
           <button
             onClick={() => setLevel("lite")}
@@ -102,7 +102,7 @@ export const Header: React.FC<HeaderProps> = ({
                 ? "bg-slate-800 text-amber-300 font-semibold shadow-sm"
                 : "text-slate-400 hover:text-slate-200"
             }`}
-            title="Lite: phrases courtes dépouillées"
+            title="Lite: full sentences stripped of fluff"
           >
             Lite
           </button>
@@ -113,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({
                 ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
                 : "text-slate-400 hover:text-slate-200"
             }`}
-            title="Full: style classique caveman télégraphique (par défaut)"
+            title="Full: classic telegraphic caveman style (default)"
           >
             Full
           </button>
@@ -124,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({
                 ? "bg-slate-800 text-amber-300 font-semibold shadow-sm"
                 : "text-slate-400 hover:text-slate-200"
             }`}
-            title="Ultra: ultra-condensé, un mot par fait"
+            title="Ultra: one word per fact, highly condensed"
           >
             Ultra
           </button>
@@ -139,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({
                 ? "bg-slate-800 text-amber-400"
                 : "text-slate-400 hover:text-slate-200"
             }`}
-            title="Vue côte à côte"
+            title="Side-by-side view"
           >
             <Columns className="w-4 h-4" />
           </button>
@@ -152,8 +152,8 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
             title={
               viewMode === "split"
-                ? "Agrandir la vue (Focus)"
-                : "Réduire la vue (Retour côte à côte)"
+                ? "Maximize output view (Focus)"
+                : "Minimize output view (Restore split)"
             }
           >
             {viewMode === "split" ? (
@@ -172,7 +172,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={onClear}
             className="p-2 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-xl transition-colors"
-            title="Effacer le texte"
+            title="Clear text"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -186,10 +186,10 @@ export const Header: React.FC<HeaderProps> = ({
               ? "bg-amber-500/10 border-amber-500/40 text-amber-300"
               : "bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
           }`}
-          title="Consulter ou modifier le prompt système Caveman"
+          title="View or edit Caveman system prompt"
         >
           <FileCode className="w-3.5 h-3.5 text-amber-400" />
-          <span className="hidden sm:inline">Prompt Caveman</span>
+          <span className="hidden sm:inline">Caveman Prompt</span>
           {isCustomPrompt && (
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
           )}
@@ -208,12 +208,12 @@ export const Header: React.FC<HeaderProps> = ({
           {isLoading ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
-              <span>Compression...</span>
+              <span>Compressing...</span>
             </>
           ) : (
             <>
               <Sparkles className="w-4 h-4 fill-slate-950" />
-              <span>Compresser (Caveman)</span>
+              <span>Compress (Caveman)</span>
             </>
           )}
         </button>

@@ -1,6 +1,6 @@
 {
   "name": "Caveman Compression Tester",
-  "description": "Outil de compression de conversations par LLM Gemini avec la méthode Caveman, comptage de tokens (tiktoken) et analyse du taux d'économie.",
+  "description": "Conversation compression tool using Gemini LLM with the Caveman method, token counting (tiktoken), and savings calculation.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

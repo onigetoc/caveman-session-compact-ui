@@ -73,7 +73,7 @@ export const MainArea: React.FC<MainAreaProps> = ({
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4 text-amber-400" />
               <h2 className="text-xs font-semibold text-slate-200 tracking-wide uppercase">
-                Transcription originale (Échanges Humain ↔ LLM)
+                Original Transcript (Human ↔ LLM Exchange)
               </h2>
             </div>
             <div className="flex items-center gap-1">
@@ -81,14 +81,14 @@ export const MainArea: React.FC<MainAreaProps> = ({
                 <button
                   onClick={handleCopyInput}
                   className="px-2 py-1 text-[11px] text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors flex items-center gap-1"
-                  title="Copier le texte d'entrée"
+                  title="Copy input text"
                 >
                   {copiedInput ? (
                     <Check className="w-3.5 h-3.5 text-emerald-400" />
                   ) : (
                     <Copy className="w-3.5 h-3.5" />
                   )}
-                  <span>{copiedInput ? "Copié" : "Copier"}</span>
+                  <span>{copiedInput ? "Copied" : "Copy"}</span>
                 </button>
               )}
             </div>
@@ -98,7 +98,7 @@ export const MainArea: React.FC<MainAreaProps> = ({
             <textarea
               value={transcript}
               onChange={(e) => setTranscript(e.target.value)}
-              placeholder="Collez ici votre transcription de conversation complète entre vous et le LLM..."
+              placeholder="Paste your full conversation transcript exchange between human and LLM here..."
               className="w-full flex-1 p-4 bg-slate-900/60 border border-slate-800 rounded-2xl text-xs text-slate-200 font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500/40 resize-none placeholder:text-slate-600 shadow-inner"
               spellCheck={false}
             />
@@ -108,10 +108,10 @@ export const MainArea: React.FC<MainAreaProps> = ({
               <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center p-6 text-center text-slate-600">
                 <Zap className="w-10 h-10 text-slate-700 mb-3 stroke-1" />
                 <p className="text-sm font-medium text-slate-400 mb-1">
-                  Collez un texte de discussion à compresser
+                  Paste a conversation transcript to compress
                 </p>
                 <p className="text-xs max-w-sm text-slate-500">
-                  Ou utilisez le menu en haut pour charger un exemple de conversation technique.
+                  Or use the top menu to load a sample technical conversation.
                 </p>
               </div>
             )}
@@ -130,7 +130,7 @@ export const MainArea: React.FC<MainAreaProps> = ({
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-400" />
               <h2 className="text-xs font-semibold text-slate-200 tracking-wide uppercase">
-                Résultat Compressé (Méthode Caveman)
+                Compressed Result (Caveman Method)
               </h2>
             </div>
 
@@ -144,10 +144,10 @@ export const MainArea: React.FC<MainAreaProps> = ({
                       ? "bg-slate-800 text-amber-300 font-medium"
                       : "text-slate-400 hover:text-slate-200"
                   }`}
-                  title="Aperçu formaté"
+                  title="Formatted preview"
                 >
                   <Eye className="w-3 h-3" />
-                  <span>Aperçu</span>
+                  <span>Preview</span>
                 </button>
                 <button
                   onClick={() => setRenderMode("raw")}
@@ -156,10 +156,10 @@ export const MainArea: React.FC<MainAreaProps> = ({
                       ? "bg-slate-800 text-amber-300 font-medium"
                       : "text-slate-400 hover:text-slate-200"
                   }`}
-                  title="Édition brute"
+                  title="Raw editing"
                 >
                   <Edit3 className="w-3 h-3" />
-                  <span>Brut</span>
+                  <span>Raw</span>
                 </button>
               </div>
 
@@ -174,7 +174,7 @@ export const MainArea: React.FC<MainAreaProps> = ({
                   ) : (
                     <Copy className="w-3.5 h-3.5 text-amber-400" />
                   )}
-                  <span>{copiedOutput ? "Copié !" : "Copier"}</span>
+                  <span>{copiedOutput ? "Copied!" : "Copy"}</span>
                 </button>
               )}
             </div>
@@ -186,10 +186,10 @@ export const MainArea: React.FC<MainAreaProps> = ({
               <div className="absolute inset-0 z-20 bg-slate-950/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center p-6 border border-slate-800">
                 <Loader2 className="w-8 h-8 text-amber-400 animate-spin mb-3" />
                 <p className="text-sm font-semibold text-slate-200 mb-1">
-                  Compression Caveman en cours avec Gemini...
+                  Caveman compression in progress with Gemini...
                 </p>
                 <p className="text-xs text-slate-400">
-                  Application du style télégraphique et préservation stricte des faits & du code
+                  Applying telegraphic style with strict preservation of facts & code
                 </p>
               </div>
             )}
@@ -198,7 +198,7 @@ export const MainArea: React.FC<MainAreaProps> = ({
               <textarea
                 value={compressedText}
                 onChange={(e) => setCompressedText(e.target.value)}
-                placeholder="Le résultat compressé s'affichera ici..."
+                placeholder="Compressed output will appear here..."
                 className="w-full flex-1 p-4 bg-slate-900/60 border border-slate-800 rounded-2xl text-xs text-emerald-300 font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500/40 resize-none shadow-inner"
                 spellCheck={false}
               />
@@ -210,10 +210,10 @@ export const MainArea: React.FC<MainAreaProps> = ({
                   <div className="h-full flex flex-col items-center justify-center text-slate-600 text-center">
                     <Sparkles className="w-10 h-10 text-slate-700 mb-3 stroke-1" />
                     <p className="text-sm font-medium text-slate-400 mb-1">
-                      Résultat de la compression Caveman
+                      Caveman Compression Result
                     </p>
                     <p className="text-xs max-w-sm text-slate-500 mb-4">
-                      Cliquez sur le bouton "Compresser (Caveman)" en haut pour lancer le traitement LLM Gemini.
+                      Click the "Compress (Caveman)" button above to run Gemini LLM processing.
                     </p>
                     {transcript && (
                       <button
@@ -222,7 +222,7 @@ export const MainArea: React.FC<MainAreaProps> = ({
                         className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2"
                       >
                         <Zap className="w-4 h-4 fill-slate-950" />
-                        <span>Lancer la compression maintenant</span>
+                        <span>Run Compression Now</span>
                       </button>
                     )}
                   </div>

@@ -32,22 +32,22 @@ export const PromptModal: React.FC<PromptModalProps> = ({
             </div>
             <div>
               <h2 className="text-lg font-semibold text-slate-100 flex items-center gap-2">
-                Prompt Système Caveman
+                Caveman System Prompt
                 {!isDefault && (
                   <span className="text-xs font-normal px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                    Modifié
+                    Modified
                   </span>
                 )}
               </h2>
               <p className="text-xs text-slate-400">
-                Personnalisez les instructions envoyées à Gemini pour la compression
+                Customize the instructions sent to Gemini for compression
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
             className="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors"
-            title="Fermer"
+            title="Close"
           >
             <X className="w-5 h-5" />
           </button>
@@ -57,20 +57,20 @@ export const PromptModal: React.FC<PromptModalProps> = ({
         <div className="bg-slate-800/40 px-6 py-2.5 border-b border-slate-800/60 flex items-center gap-2 text-xs text-slate-300">
           <Info className="w-4 h-4 text-cyan-400 flex-shrink-0" />
           <span>
-            Le prompt définit la télégraphie, les informations à conserver (100% zéro perte) et la structure de sortie.
+            This prompt dictates telegraphic style, 100% loss-free fact retention, and output layout.
           </span>
         </div>
 
         {/* Modal Body / Textarea */}
         <div className="p-6 flex-1 overflow-y-auto">
           <label className="block text-xs font-medium text-slate-400 mb-2">
-            Instructions de compression (Prompt Système)
+            Compression Instructions (System Prompt)
           </label>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             className="w-full h-96 p-4 bg-slate-950 border border-slate-800 rounded-xl font-mono text-xs text-slate-200 leading-relaxed focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 resize-y"
-            placeholder="Entrez votre prompt système de compression..."
+            placeholder="Enter system prompt instructions..."
             spellCheck={false}
           />
         </div>
@@ -85,10 +85,10 @@ export const PromptModal: React.FC<PromptModalProps> = ({
                 ? "border-slate-800 text-slate-600 bg-slate-900 cursor-not-allowed"
                 : "border-slate-700 text-slate-300 bg-slate-800/80 hover:bg-slate-800 hover:text-white"
             }`}
-            title="Restaurer le prompt Caveman par défaut"
+            title="Restore default Caveman prompt"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            Réinitialiser au prompt original
+            Reset to Original Prompt
           </button>
 
           <div className="flex items-center gap-2">
@@ -96,14 +96,14 @@ export const PromptModal: React.FC<PromptModalProps> = ({
               onClick={onClose}
               className="px-4 py-2 text-xs font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl transition-colors"
             >
-              Annuler
+              Cancel
             </button>
             <button
               onClick={onClose}
               className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-xl shadow-lg shadow-amber-400/20 transition-all"
             >
               <Check className="w-4 h-4" />
-              Appliquer les modifications
+              Apply Changes
             </button>
           </div>
         </div>

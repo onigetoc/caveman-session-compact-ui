@@ -40,7 +40,7 @@ export default function App() {
   // Handler for compression request
   const handleCompress = async () => {
     if (!transcript || transcript.trim().length === 0) {
-      setErrorMessage("Veuillez saisir ou coller un texte de conversation.");
+      setErrorMessage("Please enter or paste a conversation transcript.");
       setTimeout(() => setErrorMessage(null), 3000);
       return;
     }
@@ -64,7 +64,7 @@ export default function App() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || "Erreur lors de la compression par Gemini.");
+        throw new Error(data.error || "Error during Gemini compression.");
       }
 
       setCompressedText(data.compressedText);
@@ -74,7 +74,7 @@ export default function App() {
     } catch (err: any) {
       console.error("Compression error:", err);
       setErrorMessage(
-        err.message || "Une erreur est survenue lors de l'appel à l'API Gemini."
+        err.message || "An error occurred while calling the Gemini API."
       );
     } finally {
       setIsLoading(false);

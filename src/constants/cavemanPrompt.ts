@@ -49,31 +49,31 @@ export interface SampleConversation {
 export const SAMPLE_CONVERSATIONS: SampleConversation[] = [
   {
     id: "react-express-setup",
-    title: "Débogage API React & Express (Long)",
-    category: "Développement",
-    transcript: `Human: Bonjour, j'essaie de configurer un serveur Express v4.21 avec un frontend React 19 et Vite. Quand je lance npm run dev, le frontend me donne une erreur 404 sur les appels /api/users. Voici mon code server.ts:
+    title: "React & Express API Debugging (Long)",
+    category: "Development",
+    transcript: `Human: Hello, I'm trying to set up an Express v4.21 server with a React 19 frontend and Vite. When I run npm run dev, the frontend gives me a 404 error on /api/users calls. Here is my server.ts code:
 
 import express from 'express';
 const app = express();
 app.use(express.json());
 app.listen(3000, () => console.log('Server running on 3000'));
 
-Et mon Vite config:
+And my Vite config:
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
 });
 
-Assistant: Hello! Je vois le problème. Dans ton fichier server.ts, tu n'as pas défini de route /api/users, et dans vite.config.ts, tu n'as pas configuré de proxy pour rediriger les requêtes de Vite vers Express si tu tournes sur deux ports séparés. Cependant, si tu veux utiliser Vite comme middleware Express sur le port 3000, il faut ajouter le middleware createServer de Vite dans ton server.ts.
+Assistant: Hello! I see the issue. In your server.ts file, you haven't defined an /api/users route, and in vite.config.ts, you haven't configured a proxy to forward requests from Vite to Express if running on separate ports. However, if you want to use Vite as Express middleware on port 3000, you need to add Vite's createServer middleware to your server.ts.
 
-Voici la solution recommandée:
-1. Ajoute les routes API AVANT le middleware Vite.
-2. Ajoute createServer de Vite avec middlewareMode: true.
+Here is the recommended solution:
+1. Add API routes BEFORE Vite middleware.
+2. Add Vite's createServer with middlewareMode: true.
 
-Human: D'accord, parfait! On va choisir l'approche Vite en middlewareMode sur le port 3000. Par contre je veux aussi ajouter SQLite avec Kysely pour sauvegarder les utilisateurs. Est-ce que tu peux m'écrire le schéma de la table users avec id (uuid v4), email (unique), password_hash, et created_at?
+Human: Got it, perfect! We'll go with the Vite middlewareMode approach on port 3000. However, I also want to add SQLite with Kysely to save users. Could you write the users table schema for me with id (uuid v4), email (unique), password_hash, and created_at?
 
-Assistant: Très bien! Voici la migration Kysely pour SQLite:
+Assistant: Great! Here is the Kysely migration for SQLite:
 
 import { Kysely, sql } from 'kysely';
 
@@ -87,55 +87,55 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute();
 }
 
-Human: Super, c'est exactement ça. Mais pour l'authentification on hésitait entre JWT en cookie HTTP-only et session Express. On a décidé d'utiliser des cookies HTTP-only avec JWT pour rester stateless et éviter la gestion de session sur serveur. Par contre, les mots de passe doivent absolument être hashés avec bcryptjs et une salaison de 12 tours.
+Human: Awesome, that's exactly it. For authentication, we were deciding between JWT in an HTTP-only cookie vs Express sessions. We decided to use HTTP-only cookies with JWT to stay stateless and avoid server session management. However, passwords must strictly be hashed with bcryptjs using a salt round of 12.
 
-Assistant: Compris. Donc décision validée:
-- JWT stocké dans un cookie HTTP-only (SameSite=Lax, Secure en prod).
-- Mots de passe hashés avec bcryptjs (saltRounds = 12).
-- Base SQLite avec Kysely.
+Assistant: Understood. Confirmed decisions:
+- JWT stored in HTTP-only cookie (SameSite=Lax, Secure in prod).
+- Passwords hashed with bcryptjs (saltRounds = 12).
+- SQLite database with Kysely.
 
-Human: Est-ce qu'on a besoin d'installer jsonwebtoken et @types/jsonwebtoken?
-Assistant: Oui, npm i jsonwebtoken bcryptjs et npm i -D @types/jsonwebtoken @types/bcryptjs.
+Human: Do we need to install jsonwebtoken and @types/jsonwebtoken?
+Assistant: Yes, npm i jsonwebtoken bcryptjs and npm i -D @types/jsonwebtoken @types/bcryptjs.
 
-Human: Parfait. Maintenant où en est-on sur le projet et qu'est-ce qu'il reste à faire?
-Assistant: Le serveur Express avec Vite middleware est en place. La base SQLite et la table users sont définies. Il reste à implémenter les routes POST /api/auth/register et POST /api/auth/login.`,
+Human: Perfect. Now where do we stand on the project and what remains to be done?
+Assistant: The Express server with Vite middleware is in place. SQLite DB and users table are defined. Remaining task is implementing POST /api/auth/register and POST /api/auth/login routes.`,
   },
   {
     id: "architecture-db",
-    title: "Choix d'Architecture Base de Données",
+    title: "Database Architecture Choice",
     category: "Architecture",
-    transcript: `Human: Nous sommes en train de concevoir une application de gestion de stock et de commandes pour une chaîne de 45 magasins de détail. Nous nous demandons si nous devons utiliser PostgreSQL ou MongoDB. Nos besoins principaux: des transactions ACID strictes lors de la réservation de stock, des rapports financiers mensuels automatisés, et la gestion des droits d'accès par rôle (RBAC). Nous prévoyons 50 000 transactions par jour.
+    transcript: `Human: We are designing an inventory and order management system for a chain of 45 retail stores. We are wondering whether to use PostgreSQL or MongoDB. Main requirements: strict ACID transactions for stock reservations, automated monthly financial reporting, and role-based access control (RBAC). We expect 50,000 transactions per day.
 
-Assistant: Pour votre cas d'usage, PostgreSQL est nettement plus adapté que MongoDB. Raisons:
-1. Les transactions ACID multi-documents dans les ventes et réservations de stock nécessitent une cohérence forte.
-2. Les requêtes de rapports financiers mensuels nécessitent des jointures complexes (JOIN) et des agrégations analytiques optimisées en SQL.
-3. PostgreSQL supporte nativement le JSONB si vous avez besoin de flexibilité sur certains attributs produits.
+Assistant: For your use case, PostgreSQL is significantly better suited than MongoDB. Reasons:
+1. Multi-document ACID transactions for sales and stock reservations require strong consistency.
+2. Monthly financial reporting queries require complex SQL joins and optimized analytical aggregations.
+3. PostgreSQL natively supports JSONB if you need flexibility for product attributes.
 
-Human: D'accord, on valide PostgreSQL. Pour l'hébergement cloud, on hésite entre AWS RDS PostgreSQL et Supabase. On a une équipe de 3 développeurs fullstack.
+Human: Alright, let's go with PostgreSQL. For cloud hosting, we're deciding between AWS RDS PostgreSQL and Supabase. We have a team of 3 fullstack developers.
 
-Assistant: Si votre équipe est réduite (3 dev) et souhaite avancer vite avec un backend-as-a-service, Supabase offre PostgreSQL géré avec Auth, Row Level Security (RLS) et API auto-générées. AWS RDS demande plus de configuration DevOps.
+Assistant: Since your team is small (3 devs) and wants to move fast with a backend-as-a-service, Supabase offers managed PostgreSQL with Auth, Row Level Security (RLS), and auto-generated APIs. AWS RDS requires more DevOps configuration.
 
-Human: On choisit Supabase PostgreSQL pour la vitesse de développement et la gestion RLS intégrée. Par contre, la contrainte majeure est que tous les prix doivent être stockés en centimes sous forme d'entiers (INTEGER) pour éviter les erreurs d'arrondi décimal.
+Human: We pick Supabase PostgreSQL for development speed and built-in RLS management. However, a major constraint is that all prices must be stored in cents as integers (INTEGER) to prevent decimal rounding errors.
 
-Assistant: Noté. Contrainte 100% impérative: montant en centimes (INTEGER). Supabase PostgreSQL retenu.`,
+Assistant: Noted. Strict 100% constraint: amounts in cents (INTEGER). Supabase PostgreSQL selected.`,
   },
   {
     id: "customer-support-chat",
-    title: "Support Client - Réclamation Livraison",
+    title: "Customer Support - Delivery Claim",
     category: "Support",
-    transcript: `Human: Client #8492 (Jean Dupont). Commande CMD-2026-0812 passée le 14 juillet 2026 pour un montant de 189.90€. Colis indiqué comme 'Livré' le 18 juillet par le livreur Chronopost, mais le client affirme ne rien avoir reçu. Le client exige un remboursement immédiat ou un renvoi express.
+    transcript: `Human: Customer #8492 (John Doe). Order CMD-2026-0812 placed on July 14, 2026 for $189.90. Package marked 'Delivered' on July 18 by Chronopost courier, but customer claims they received nothing. Customer demands an immediate refund or express reshipment.
 
-Assistant: Je vérifie le dossier. Selon la politique commerciale (article 4.2), pour tout colis marqué livré mais contesté:
-1. Demander une attestation sur l'honneur de non-réception signée avec copie de pièce d'identité.
-2. Ouvrir un litige transporteur auprès de Chronopost (délai de réponse 48h).
-3. Si le montant est supérieur à 150€, nous ne pouvons pas effectuer de réexpédition immédiate sans l'attestation signée.
+Assistant: Checking the record. According to store policy (article 4.2), for any package marked delivered but disputed:
+1. Request a signed non-receipt sworn statement with ID copy.
+2. Open a carrier claim with Chronopost (48h turnaround time).
+3. If amount exceeds $150, we cannot process immediate reshipment without the signed statement.
 
-Human: Le client a envoyé l'attestation signée et sa carte d'identité par email à 10h15 ce matin. Le fichier s'appelle attestation_CMD20260812.pdf. On choisit de procéder à la réexpédition express du produit aujourd'hui même via DHL Express (code suivi DHL-99218) plutôt qu'un remboursement.
+Human: Customer sent the signed statement and ID via email at 10:15 AM today. File name is statement_CMD20260812.pdf. We choose to proceed with express reshipment of the product today via DHL Express (tracking code DHL-99218) instead of a refund.
 
-Assistant: Parfait. Décision enregistrée:
-- Attestation reçue et validée.
-- Option choisie: Réexpédition DHL Express (suivi DHL-99218).
-- Pas de remboursement.
-- Dossier de réclamation Chronopost #LIT-8831 ouvert pour indemnisation interne.`,
+Assistant: Perfect. Recorded decision:
+- Sworn statement received and verified.
+- Option chosen: DHL Express reshipment (tracking DHL-99218).
+- No refund.
+- Chronopost carrier claim #LIT-8831 opened for internal reimbursement.`,
   }
 ];
